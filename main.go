@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/beefsack/go-geekdo"
 )
-
-const MaxPages = 200
 
 func main() {
 	stderr := log.New(os.Stderr, "", 0)
@@ -29,7 +28,9 @@ func main() {
 	}); err != nil {
 		stderr.Fatalf("Error writing line of CSV, %v", err)
 	}
-	for page := 1; page <= MaxPages; page++ {
+	page := 1
+	fetching := true
+	for fetching {
 		url := fmt.Sprintf(
 			"http://boardgamegeek.com/search/boardgame/page/%d?sort=rank&advsearch=1&nosubtypes%%5B0%%5D=boardgameexpansion",
 			page,
@@ -38,7 +39,14 @@ func main() {
 		if err != nil {
 			stderr.Fatalf("Error querying %s, %v", url, err)
 		}
+		if len(r) == 0 {
+			break
+		}
 		for _, thing := range r {
+			if thing.Rank == 0 {
+				fetching = false
+				break
+			}
 			if err := w.Write([]string{
 				fmt.Sprintf("%v", thing.ID),
 				thing.Name,
@@ -53,5 +61,7 @@ func main() {
 				stderr.Fatalf("Error writing line of CSV, %v", err)
 			}
 		}
+		// Rate limit
+		time.Sleep(5 * time.Second)
 	}
 }
