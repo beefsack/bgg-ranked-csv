@@ -9,7 +9,7 @@ import (
 	"github.com/beefsack/go-geekdo"
 )
 
-const MaxPages = 100
+const MaxPages = 200
 
 func main() {
 	stderr := log.New(os.Stderr, "", 0)
