@@ -61,6 +61,7 @@ func main() {
 				stderr.Fatalf("Error writing line of CSV, %v", err)
 			}
 		}
+		page++
 		// Rate limit
 		time.Sleep(5 * time.Second)
 	}
