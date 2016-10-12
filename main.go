@@ -28,25 +28,28 @@ func main() {
 	}); err != nil {
 		stderr.Fatalf("Error writing line of CSV, %v", err)
 	}
-	page := 1
-	fetching := true
-	for fetching {
+	page := 0
+	for {
+		page++
 		url := fmt.Sprintf(
-			"http://boardgamegeek.com/search/boardgame/page/%d?sort=rank&advsearch=1&nosubtypes%%5B0%%5D=boardgameexpansion",
+			"https://boardgamegeek.com/browse/boardgame/page/%d",
 			page,
 		)
+		stderr.Printf("GET %s", url)
 		r, err := client.AdvSearch(url)
 		if err != nil {
 			stderr.Fatalf("Error querying %s, %v", url, err)
 		}
 		if len(r) == 0 {
+			stderr.Print("No results")
 			break
 		}
+		rankedOnPage := 0
 		for _, thing := range r {
 			if thing.Rank == 0 {
-				fetching = false
-				break
+				continue
 			}
+			rankedOnPage++
 			if err := w.Write([]string{
 				fmt.Sprintf("%v", thing.ID),
 				thing.Name,
@@ -61,8 +64,12 @@ func main() {
 				stderr.Fatalf("Error writing line of CSV, %v", err)
 			}
 		}
-		page++
+		if rankedOnPage == 0 {
+			stderr.Printf("No ranked games on page %d, stopping", page)
+			break
+		}
 		// Rate limit
 		time.Sleep(5 * time.Second)
 	}
+	stderr.Printf("Finished on page %d", page)
 }
