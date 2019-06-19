@@ -32,7 +32,7 @@ func main() {
 	for {
 		page++
 		url := fmt.Sprintf(
-			"https://boardgamegeek.com/browse/boardgame/page/%d",
+			"https://boardgamegeek.com/browse/boardgame/page/%d?sort=rank&sortdir=asc",
 			page,
 		)
 		stderr.Printf("GET %s", url)
