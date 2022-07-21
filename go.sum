@@ -1,5 +1,7 @@
 github.com/beefsack/go-geekdo v0.0.0-20161018022800-d97fda6a3cb1 h1:r88YdLUPeqsvQKOJdmZtytMM1jITm62hsIWHXYV64hg=
 github.com/beefsack/go-geekdo v0.0.0-20161018022800-d97fda6a3cb1/go.mod h1:+pO2KQNpew0dyFrZ7pDgDYVtkY6ADib6IageboddV5c=
+github.com/beefsack/go-geekdo v0.0.0-20220721102638-ad945b3ab39d h1:ktILkm0z2sRo7daPx/ggYfdmTsPmskW9T1KVu099BuA=
+github.com/beefsack/go-geekdo v0.0.0-20220721102638-ad945b3ab39d/go.mod h1:urElc2PmS45IPCd+8hi6a9iclCT40qPj8iinTLSoNlk=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/moovweb/gokogiri v0.0.0-20180713195410-a1a828153468 h1:s7OD9KAZ/X1BdIlXtaZUgROv/5OaFo1MlsSetrtxIis=

@@ -12,7 +12,19 @@ import (
 
 func main() {
 	stderr := log.New(os.Stderr, "", 0)
-	client := geekdo.NewClient()
+	client, err := geekdo.NewClient()
+	if err != nil {
+		stderr.Fatalf("Error creating client, %v", err)
+	}
+	username := os.Getenv("BGG_USERNAME")
+	password := os.Getenv("BGG_PASSWORD")
+	if username != "" && password != "" {
+		stderr.Println("Logging in")
+		if err = client.Login(username, password); err != nil {
+			stderr.Fatalf("Error logging in, %v", err)
+		}
+	}
+
 	w := csv.NewWriter(os.Stdout)
 	defer w.Flush()
 	if err := w.Write([]string{
