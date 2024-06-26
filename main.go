@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/beefsack/go-geekdo"
 )
@@ -13,17 +12,17 @@ import (
 const MAX_RETRIES = 5
 
 func main() {
-	stderr := log.New(os.Stderr, "", 0)
+	stderr := log.New(os.Stderr, "", log.Ldate|log.Ltime)
 	client, err := geekdo.NewClient()
 	if err != nil {
-		stderr.Fatalf("Error creating client, %v", err)
+		stderr.Fatalf("Error creating client, %v\n", err)
 	}
 	username := os.Getenv("BGG_USERNAME")
 	password := os.Getenv("BGG_PASSWORD")
 	if username != "" && password != "" {
 		stderr.Println("Logging in")
 		if err = client.Login(username, password); err != nil {
-			stderr.Fatalf("Error logging in, %v", err)
+			stderr.Fatalf("Error logging in, %v\n", err)
 		}
 	}
 
@@ -40,7 +39,7 @@ func main() {
 		"URL",
 		"Thumbnail",
 	}); err != nil {
-		stderr.Fatalf("Error writing line of CSV, %v", err)
+		stderr.Fatalf("Error writing line of CSV, %v\n", err)
 	}
 	page := 0
 	for {
@@ -49,7 +48,7 @@ func main() {
 			"https://boardgamegeek.com/browse/boardgame/page/%d?sort=rank&sortdir=asc",
 			page,
 		)
-		stderr.Printf("GET %s", url)
+		stderr.Printf("GET %s\n", url)
 		r := []geekdo.SearchCollectionItem{}
 		tries := 0
 		for {
@@ -59,14 +58,14 @@ func main() {
 			var err error
 			r, err = client.AdvSearch(url)
 			if err != nil {
-				stderr.Printf("Error querying %s, %v", url, err)
+				stderr.Printf("Error querying %s, %v\n", url, err)
 				if tries == MAX_RETRIES {
 					os.Exit(1)
 				}
 				continue
 			}
 			if len(r) == 0 {
-				stderr.Print("No results")
+				stderr.Println("No results")
 				// We will still retry because BGG sometimes has a caching issue
 				// where no ranked games appear on an index page
 				if tries == MAX_RETRIES {
@@ -77,6 +76,7 @@ func main() {
 			// Check for any unranked games, which will also trigger a retry
 			for _, thing := range r {
 				if thing.Rank == 0 {
+					stderr.Println("Result contains some unranked games")
 					// We will still retry because BGG sometimes has a caching issue
 					// where no ranked games appear on an index page
 					if tries == MAX_RETRIES {
@@ -105,15 +105,13 @@ func main() {
 				thing.URL,
 				thing.Thumbnail,
 			}); err != nil {
-				stderr.Fatalf("Error writing line of CSV, %v", err)
+				stderr.Fatalf("Error writing line of CSV, %v\n", err)
 			}
 		}
 		if rankedOnPage == 0 {
-			stderr.Printf("No ranked games on page %d, stopping", page)
+			stderr.Printf("No ranked games on page %d, stopping\n", page)
 			break
 		}
-		// Rate limit
-		time.Sleep(5 * time.Second)
 	}
-	stderr.Printf("Finished on page %d", page)
+	stderr.Printf("Finished on page %d\n", page)
 }
