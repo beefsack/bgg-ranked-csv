@@ -2,6 +2,8 @@ github.com/beefsack/go-geekdo v0.0.0-20161018022800-d97fda6a3cb1 h1:r88YdLUPeqsv
 github.com/beefsack/go-geekdo v0.0.0-20161018022800-d97fda6a3cb1/go.mod h1:+pO2KQNpew0dyFrZ7pDgDYVtkY6ADib6IageboddV5c=
 github.com/beefsack/go-geekdo v0.0.0-20220721102638-ad945b3ab39d h1:ktILkm0z2sRo7daPx/ggYfdmTsPmskW9T1KVu099BuA=
 github.com/beefsack/go-geekdo v0.0.0-20220721102638-ad945b3ab39d/go.mod h1:urElc2PmS45IPCd+8hi6a9iclCT40qPj8iinTLSoNlk=
+github.com/beefsack/go-geekdo v0.0.0-20240627012859-4605f9c4af74 h1:h1kQKNpgTvCckRmXeeXer4NuuDWB6nnnbEYA5WQ2kcY=
+github.com/beefsack/go-geekdo v0.0.0-20240627012859-4605f9c4af74/go.mod h1:1bcOEi75DAnk1GJk5I/UKwvV+F+9ipK8gWzZBr0TwmQ=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/moovweb/gokogiri v0.0.0-20180713195410-a1a828153468 h1:s7OD9KAZ/X1BdIlXtaZUgROv/5OaFo1MlsSetrtxIis=
@@ -13,6 +15,8 @@ github.com/sergioangulo/gokogiri v0.0.0-20190319154429-32a8b96fe28e/go.mod h1:Cu
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+golang.org/x/time v0.5.0 h1:o7cqy6amK/52YcAKIPlM3a+Fpj35zvRj2TP+e1xFSfk=
+golang.org/x/time v0.5.0/go.mod h1:3BpzKBy/shNhVucY/MWOyx10tF3SFh9QdLuxbVysPQM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

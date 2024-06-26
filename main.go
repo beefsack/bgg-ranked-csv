@@ -10,6 +10,8 @@ import (
 	"github.com/beefsack/go-geekdo"
 )
 
+const MAX_RETRIES = 5
+
 func main() {
 	stderr := log.New(os.Stderr, "", 0)
 	client, err := geekdo.NewClient()
@@ -48,12 +50,42 @@ func main() {
 			page,
 		)
 		stderr.Printf("GET %s", url)
-		r, err := client.AdvSearch(url)
-		if err != nil {
-			stderr.Fatalf("Error querying %s, %v", url, err)
-		}
-		if len(r) == 0 {
-			stderr.Print("No results")
+		r := []geekdo.SearchCollectionItem{}
+		tries := 0
+		for {
+			tries++
+			// The request can sometimes fail, or hit a cache with an empty page, so
+			// we will have a number of retries
+			var err error
+			r, err = client.AdvSearch(url)
+			if err != nil {
+				stderr.Printf("Error querying %s, %v", url, err)
+				if tries == MAX_RETRIES {
+					os.Exit(1)
+				}
+				continue
+			}
+			if len(r) == 0 {
+				stderr.Print("No results")
+				// We will still retry because BGG sometimes has a caching issue
+				// where no ranked games appear on an index page
+				if tries == MAX_RETRIES {
+					break
+				}
+				continue
+			}
+			// Check for any unranked games, which will also trigger a retry
+			for _, thing := range r {
+				if thing.Rank == 0 {
+					// We will still retry because BGG sometimes has a caching issue
+					// where no ranked games appear on an index page
+					if tries == MAX_RETRIES {
+						break
+					}
+					continue
+				}
+			}
+			// We got here with a full page of ranked games
 			break
 		}
 		rankedOnPage := 0
