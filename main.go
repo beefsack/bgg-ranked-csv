@@ -74,16 +74,20 @@ func main() {
 				continue
 			}
 			// Check for any unranked games, which will also trigger a retry
+			hasUnranked := false
 			for _, thing := range r {
 				if thing.Rank == 0 {
-					stderr.Println("Result contains some unranked games")
-					// We will still retry because BGG sometimes has a caching issue
-					// where no ranked games appear on an index page
-					if tries == MAX_RETRIES {
-						break
-					}
-					continue
+					hasUnranked = true
 				}
+			}
+			if hasUnranked {
+				stderr.Println("Result contains some unranked games")
+				// We will still retry because BGG sometimes has a caching issue
+				// where no ranked games appear on an index page
+				if tries == MAX_RETRIES {
+					break
+				}
+				continue
 			}
 			// We got here with a full page of ranked games
 			break
