@@ -9,7 +9,7 @@ import (
 	"github.com/beefsack/go-geekdo"
 )
 
-const MAX_RETRIES = 5
+const MAX_RETRIES = 10
 
 func main() {
 	stderr := log.New(os.Stderr, "", log.Ldate|log.Ltime)
